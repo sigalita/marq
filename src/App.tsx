@@ -3,6 +3,7 @@ import { FilterBar } from './components/FilterBar';
 import type { SortKey, ViewMode } from './components/FilterBar';
 import { KanbanBoard } from './components/KanbanBoard';
 import { AgentTable } from './components/AgentTable';
+import { SplitView } from './components/SplitView';
 import { mockAgents } from './data/mockAgents';
 import type { AgentCard } from './types/agent';
 import type { UrgencyLevel } from './types/agent';
@@ -38,20 +39,7 @@ function App() {
         <AgentTable agents={agents} />
       )}
       {viewMode === 'split' && (
-        <div className="split-view">
-          <div className="split-pane split-top">
-            <AgentTable agents={agents} compact />
-          </div>
-          <div className="split-divider" />
-          <div className="split-pane split-bottom">
-            <KanbanBoard
-              agents={agents}
-              sort={sort}
-              viewMode="horizontal"
-              visibleColumns={visibleColumns}
-            />
-          </div>
-        </div>
+        <SplitView agents={agents} />
       )}
       {(viewMode === 'horizontal' || viewMode === 'vertical') && (
         <KanbanBoard
