@@ -9,8 +9,9 @@ interface AgentCardProps {
 const URGENCY_LABELS: Record<UrgencyLevel, string> = {
   blocked: 'Blocked',
   attention: 'Attention',
-  working: 'Working',
-  done: 'Completed',
+  stale: 'Stale',
+  running: 'Running',
+  completed: 'Completed',
 };
 
 export function AgentCard({ agent }: AgentCardProps) {

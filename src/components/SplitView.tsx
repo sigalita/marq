@@ -6,18 +6,28 @@ interface SplitViewProps {
   agents: AgentCardType[];
 }
 
+const URGENCY_WEIGHT: Record<UrgencyLevel, number> = {
+  blocked: 0,
+  attention: 1,
+  stale: 2,
+  running: 3,
+  completed: 4,
+};
+
 const URGENCY_LABELS: Record<UrgencyLevel, string> = {
   blocked: 'Blocked',
   attention: 'Attention',
-  working: 'Working',
-  done: 'Done',
+  stale: 'Stale',
+  running: 'Running',
+  completed: 'Completed',
 };
 
 export function SplitView({ agents }: SplitViewProps) {
-  // Sort by duration (longest first)
-  const sorted = [...agents].sort(
-    (a, b) => new Date(a.agentStatusChanged).getTime() - new Date(b.agentStatusChanged).getTime()
-  );
+  const sorted = [...agents].sort((a, b) => {
+    const cmp = URGENCY_WEIGHT[getUrgency(a.agentStatus)] - URGENCY_WEIGHT[getUrgency(b.agentStatus)];
+    if (cmp !== 0) return cmp;
+    return new Date(a.agentStatusChanged).getTime() - new Date(b.agentStatusChanged).getTime();
+  });
 
   return (
     <div className="split-grid" style={{ '--card-count': sorted.length } as React.CSSProperties}>

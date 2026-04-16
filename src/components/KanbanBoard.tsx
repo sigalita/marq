@@ -10,27 +10,23 @@ interface KanbanBoardProps {
   visibleColumns: Record<UrgencyLevel, boolean>;
 }
 
-const PRIORITY_ORDER: Record<string, number> = {
-  'Awaiting Permission': 0,
-  'Errored': 1,
-  'Asking Question': 2,
-  'Context Exhausted': 3,
-  'Rate Limited': 4,
-  'CI Failing': 0,
-  'PR Ready for Review': 1,
-  'Merge Conflict': 2,
-  'PR Feedback Received': 3,
-  'Scope Uncertainty': 4,
-  'Dependency Blocked': 5,
-  'Actively Working': 0,
-  'Completed': 0,
-  'Idle': 1,
-  'Queued': 2,
+const URGENCY_WEIGHT: Record<UrgencyLevel, number> = {
+  blocked: 0,
+  attention: 1,
+  stale: 2,
+  running: 3,
+  completed: 4,
 };
 
 function sortAgents(agents: AgentCardType[], sortKey: SortKey): AgentCardType[] {
   const sorted = [...agents];
   switch (sortKey) {
+    case 'status':
+      return sorted.sort((a, b) => {
+        const cmp = URGENCY_WEIGHT[getUrgency(a.agentStatus)] - URGENCY_WEIGHT[getUrgency(b.agentStatus)];
+        if (cmp !== 0) return cmp;
+        return new Date(a.agentStatusChanged).getTime() - new Date(b.agentStatusChanged).getTime();
+      });
     case 'duration':
       return sorted.sort((a, b) =>
         new Date(a.agentStatusChanged).getTime() - new Date(b.agentStatusChanged).getTime()
@@ -43,7 +39,7 @@ function sortAgents(agents: AgentCardType[], sortKey: SortKey): AgentCardType[] 
       return sorted.sort((a, b) => a.projectName.localeCompare(b.projectName));
     case 'priority':
       return sorted.sort((a, b) =>
-        (PRIORITY_ORDER[a.agentStatus] ?? 99) - (PRIORITY_ORDER[b.agentStatus] ?? 99)
+        (URGENCY_WEIGHT[getUrgency(a.agentStatus)] ?? 99) - (URGENCY_WEIGHT[getUrgency(b.agentStatus)] ?? 99)
       );
   }
 }
@@ -51,8 +47,9 @@ function sortAgents(agents: AgentCardType[], sortKey: SortKey): AgentCardType[] 
 const COLUMNS: { urgency: UrgencyLevel; title: string }[] = [
   { urgency: 'blocked', title: 'Blocked' },
   { urgency: 'attention', title: 'Needs Attention' },
-  { urgency: 'working', title: 'Working' },
-  { urgency: 'done', title: 'Done' },
+  { urgency: 'stale', title: 'Stale' },
+  { urgency: 'running', title: 'Running' },
+  { urgency: 'completed', title: 'Completed' },
 ];
 
 export function KanbanBoard({ agents, sort, viewMode, visibleColumns }: KanbanBoardProps) {

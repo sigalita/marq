@@ -14,8 +14,9 @@ type SortDir = 'asc' | 'desc';
 const URGENCY_WEIGHT: Record<UrgencyLevel, number> = {
   blocked: 0,
   attention: 1,
-  working: 2,
-  done: 3,
+  stale: 2,
+  running: 3,
+  completed: 4,
 };
 
 const PRIORITY_WEIGHT: Record<Priority, number> = {
@@ -30,6 +31,7 @@ function compareAgents(a: AgentCardType, b: AgentCardType, key: TableSortKey, di
   switch (key) {
     case 'status':
       cmp = URGENCY_WEIGHT[getUrgency(a.agentStatus)] - URGENCY_WEIGHT[getUrgency(b.agentStatus)];
+      if (cmp === 0) cmp = new Date(a.agentStatusChanged).getTime() - new Date(b.agentStatusChanged).getTime();
       break;
     case 'project':
       cmp = a.projectName.localeCompare(b.projectName);
@@ -50,12 +52,13 @@ function compareAgents(a: AgentCardType, b: AgentCardType, key: TableSortKey, di
 const STATUS_LABEL: Record<UrgencyLevel, string> = {
   blocked: 'Blocked',
   attention: 'Needs Attention',
-  working: 'Working',
-  done: 'Done',
+  stale: 'Stale',
+  running: 'Running',
+  completed: 'Completed',
 };
 
 export function AgentTable({ agents, compact }: AgentTableProps) {
-  const [sortKey, setSortKey] = useState<TableSortKey>('duration');
+  const [sortKey, setSortKey] = useState<TableSortKey>('status');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
 
   const handleSort = (key: TableSortKey) => {
@@ -103,35 +106,28 @@ export function AgentTable({ agents, compact }: AgentTableProps) {
             const jiraUrl = `https://amplitude.atlassian.net/browse/${agent.jiraKey}`;
 
             return (
-              <tr
-                key={agent.id}
-                className={`table-row row-${urgency}`}
-              >
+              <tr key={agent.id} className={`table-row row-${urgency}`}>
                 <td className="table-td td-status">
                   <span className={`status-label status-${urgency}`}>
                     {STATUS_LABEL[urgency]}
                   </span>
                 </td>
-
                 <td className="table-td td-project">
                   <a href={jiraUrl} className="table-project-link" target="_blank" rel="noreferrer">
                     {agent.projectName}
                   </a>
                   {!compact && <span className="table-summary">{agent.agentSummary}</span>}
                 </td>
-
                 <td className="table-td td-jira">
                   <a href={jiraUrl} className="table-jira" target="_blank" rel="noreferrer">
                     {agent.jiraKey}
                   </a>
                 </td>
-
                 <td className="table-td td-priority">
                   <span className={`priority-badge priority-${agent.priority.toLowerCase()}`}>
                     {agent.priority}
                   </span>
                 </td>
-
                 <td className="table-td td-duration">
                   <span className={`time-in-state time-${urgency}`}>{timeStr}</span>
                 </td>

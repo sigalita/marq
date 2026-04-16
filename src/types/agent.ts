@@ -13,13 +13,18 @@ export type AgentStatusAttention =
   | 'Scope Uncertainty'
   | 'Dependency Blocked';
 
-export type AgentStatusInfo =
-  | 'Actively Working'
-  | 'Completed'
-  | 'Idle'
-  | 'Queued';
+export type AgentStatusStale = 'Stale';
 
-export type AgentStatus = AgentStatusBlocked | AgentStatusAttention | AgentStatusInfo;
+export type AgentStatusRunning = 'Running';
+
+export type AgentStatusCompleted = 'Completed' | 'Idle' | 'Queued';
+
+export type AgentStatus =
+  | AgentStatusBlocked
+  | AgentStatusAttention
+  | AgentStatusStale
+  | AgentStatusRunning
+  | AgentStatusCompleted;
 
 export type UnblockAction =
   | 'Approve Permission'
@@ -33,7 +38,7 @@ export type UnblockAction =
   | 'Unblock Dependency'
   | 'None';
 
-export type UrgencyLevel = 'blocked' | 'attention' | 'working' | 'done';
+export type UrgencyLevel = 'blocked' | 'attention' | 'stale' | 'running' | 'completed';
 
 export type Priority = 'Critical' | 'High' | 'Medium' | 'Low';
 
@@ -47,7 +52,7 @@ export interface AgentCard {
   blockingDetail: string;
   claudeThreadLink: string;
   prLink: string;
-  agentStatusChanged: string; // ISO datetime
+  agentStatusChanged: string;
   priority: Priority;
 }
 
@@ -68,13 +73,16 @@ export const ATTENTION_STATUSES: AgentStatus[] = [
   'Dependency Blocked',
 ];
 
-export const WORKING_STATUSES: AgentStatus[] = ['Actively Working'];
+export const STALE_STATUSES: AgentStatus[] = ['Stale'];
 
-export const DONE_STATUSES: AgentStatus[] = ['Completed', 'Idle', 'Queued'];
+export const RUNNING_STATUSES: AgentStatus[] = ['Running'];
+
+export const COMPLETED_STATUSES: AgentStatus[] = ['Completed', 'Idle', 'Queued'];
 
 export function getUrgency(status: AgentStatus): UrgencyLevel {
   if (BLOCKED_STATUSES.includes(status)) return 'blocked';
   if (ATTENTION_STATUSES.includes(status)) return 'attention';
-  if (WORKING_STATUSES.includes(status)) return 'working';
-  return 'done';
+  if (STALE_STATUSES.includes(status)) return 'stale';
+  if (RUNNING_STATUSES.includes(status)) return 'running';
+  return 'completed';
 }

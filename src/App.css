@@ -91,8 +91,8 @@
 
 .stat-blocked { color: var(--red); background: var(--red-dim); }
 .stat-attention { color: var(--amber); background: var(--amber-dim); }
-.stat-working { color: var(--green); background: var(--green-dim); }
-.stat-done { color: var(--gray); background: var(--gray-dim); }
+.stat-running { color: var(--green); background: var(--green-dim); }
+.stat-completed { color: var(--gray); background: var(--gray-dim); }
 
 .stat-dot {
   width: 6px;
@@ -102,8 +102,8 @@
 
 .dot-blocked { background: var(--red); }
 .dot-attention { background: var(--amber); }
-.dot-working { background: var(--green); }
-.dot-done { background: var(--gray); }
+.dot-running { background: var(--green); }
+.dot-completed { background: var(--gray); }
 
 .filter-btn {
   display: flex;
@@ -134,8 +134,8 @@
 
 .filter-blocked.active { background: var(--red); border-color: var(--red); color: #fff; }
 .filter-attention.active { background: var(--amber); border-color: var(--amber); color: #fff; }
-.filter-working.active { background: var(--green); border-color: var(--green); color: #fff; }
-.filter-done.active { background: var(--gray); border-color: var(--gray); color: #fff; }
+.filter-running.active { background: var(--green); border-color: var(--green); color: #fff; }
+.filter-completed.active { background: var(--gray); border-color: var(--gray); color: #fff; }
 
 .filter-count {
   font-size: 11px;
@@ -311,8 +311,8 @@
 
 .column-checkbox input:checked + .dot-blocked { background: var(--red); }
 .column-checkbox input:checked + .dot-attention { background: var(--amber); }
-.column-checkbox input:checked + .dot-working { background: var(--green); }
-.column-checkbox input:checked + .dot-done { background: var(--gray); }
+.column-checkbox input:checked + .dot-running { background: var(--green); }
+.column-checkbox input:checked + .dot-completed { background: var(--gray); }
 
 /* ========== KANBAN BOARD ========== */
 .kanban-board {
@@ -383,13 +383,13 @@
 
 .column-blocked .column-dot { background: var(--red); }
 .column-attention .column-dot { background: var(--amber); }
-.column-working .column-dot { background: var(--green); }
-.column-done .column-dot { background: var(--gray); }
+.column-running .column-dot { background: var(--green); }
+.column-completed .column-dot { background: var(--gray); }
 
 .count-blocked { background: var(--red-dim); color: var(--red); }
 .count-attention { background: var(--amber-dim); color: var(--amber); }
-.count-working { background: var(--green-dim); color: var(--green); }
-.count-done { background: var(--gray-dim); color: var(--gray); }
+.count-running { background: var(--green-dim); color: var(--green); }
+.count-completed { background: var(--gray-dim); color: var(--gray); }
 
 .column-cards {
   display: flex;
@@ -432,10 +432,10 @@
 
 .urgency-blocked { border-left-color: var(--red); }
 .urgency-attention { border-left-color: var(--amber); }
-.urgency-working { border-left-color: var(--green); }
-.urgency-done { border-left-color: var(--gray); opacity: 0.6; }
+.urgency-running { border-left-color: var(--green); }
+.urgency-completed { border-left-color: var(--gray); opacity: 0.6; }
 
-.urgency-done:hover { opacity: 0.8; }
+.urgency-completed:hover { opacity: 0.8; }
 
 /* Escalation tiers */
 
@@ -472,7 +472,7 @@
 
 .badge-blocked { background: var(--red-dim); color: var(--red); }
 .badge-attention { background: var(--amber-dim); color: var(--amber); }
-.badge-working { background: var(--green-dim); color: var(--green); }
+.badge-running { background: var(--green-dim); color: var(--green); }
 .badge-done { background: var(--gray-dim); color: var(--gray); }
 
 .badge-dot {

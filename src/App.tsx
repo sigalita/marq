@@ -11,13 +11,14 @@ import './App.css';
 
 function App() {
   const [agents] = useState<AgentCard[]>(mockAgents);
-  const [sort, setSort] = useState<SortKey>('duration');
+  const [sort, setSort] = useState<SortKey>('status');
   const [viewMode, setViewMode] = useState<ViewMode>('table');
   const [visibleColumns, setVisibleColumns] = useState<Record<UrgencyLevel, boolean>>({
     blocked: true,
     attention: true,
-    working: true,
-    done: true,
+    stale: true,
+    running: true,
+    completed: false,
   });
 
   const toggleColumn = useCallback((col: UrgencyLevel) => {
