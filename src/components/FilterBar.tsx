@@ -4,7 +4,7 @@ import { getUrgency } from '../types/agent';
 
 export type FilterValue = 'all' | UrgencyLevel;
 export type SortKey = 'az' | 'newest' | 'duration' | 'priority';
-export type ViewMode = 'horizontal' | 'vertical' | 'table';
+export type ViewMode = 'horizontal' | 'vertical' | 'table' | 'split';
 
 interface FilterBarProps {
   agents: AgentCardType[];
@@ -148,6 +148,16 @@ export function FilterBar({
                 <rect x="8.5" y="10.5" width="6.5" height="1.5" rx="0.5" fill="currentColor" opacity="0.3"/>
                 <rect x="1" y="13.5" width="6" height="1.5" rx="0.5" fill="currentColor" opacity="0.5"/>
                 <rect x="8.5" y="13.5" width="6.5" height="1.5" rx="0.5" fill="currentColor" opacity="0.3"/>
+              </svg>
+            </button>
+            <button
+              className={`view-btn${viewMode === 'split' ? ' active' : ''}`}
+              onClick={() => onViewMode('split')}
+              title="Split"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="1" y="1" width="14" height="6.5" rx="1" fill="currentColor"/>
+                <rect x="1" y="9" width="14" height="6" rx="1" fill="currentColor" opacity="0.4"/>
               </svg>
             </button>
           </div>

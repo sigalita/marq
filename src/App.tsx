@@ -11,7 +11,7 @@ import './App.css';
 function App() {
   const [agents] = useState<AgentCard[]>(mockAgents);
   const [sort, setSort] = useState<SortKey>('duration');
-  const [viewMode, setViewMode] = useState<ViewMode>('horizontal');
+  const [viewMode, setViewMode] = useState<ViewMode>('table');
   const [visibleColumns, setVisibleColumns] = useState<Record<UrgencyLevel, boolean>>({
     blocked: true,
     attention: true,
@@ -34,9 +34,26 @@ function App() {
         visibleColumns={visibleColumns}
         onToggleColumn={toggleColumn}
       />
-      {viewMode === 'table' ? (
+      {viewMode === 'table' && (
         <AgentTable agents={agents} />
-      ) : (
+      )}
+      {viewMode === 'split' && (
+        <div className="split-view">
+          <div className="split-pane split-top">
+            <AgentTable agents={agents} compact />
+          </div>
+          <div className="split-divider" />
+          <div className="split-pane split-bottom">
+            <KanbanBoard
+              agents={agents}
+              sort={sort}
+              viewMode="horizontal"
+              visibleColumns={visibleColumns}
+            />
+          </div>
+        </div>
+      )}
+      {(viewMode === 'horizontal' || viewMode === 'vertical') && (
         <KanbanBoard
           agents={agents}
           sort={sort}

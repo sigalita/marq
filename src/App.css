@@ -629,18 +629,21 @@ a.card-jira:hover {
   font-size: 10px;
 }
 
-/* Column widths — 4 cols: Project / Ticket / Priority / Time */
+/* Column widths — 5 cols: Status / Project / Ticket / Priority / Time */
 .table-header-row th:nth-child(1),
-.td-project { width: 55%; }
+.td-status { width: 13%; }
 
 .table-header-row th:nth-child(2),
-.td-jira { width: 12%; }
+.td-project { width: 42%; }
 
 .table-header-row th:nth-child(3),
-.td-priority { width: 13%; }
+.td-jira { width: 10%; }
 
 .table-header-row th:nth-child(4),
-.td-duration { width: 20%; }
+.td-priority { width: 12%; }
+
+.table-header-row th:nth-child(5),
+.td-duration { width: 13%; }
 
 .table-row {
   background: var(--bg-card);
@@ -741,4 +744,81 @@ a.card-jira:hover {
 .priority-high { background: rgba(234, 88, 12, 0.08); color: #EA580C; }
 .priority-medium { background: var(--amber-dim); color: var(--amber); }
 .priority-low { background: var(--gray-dim); color: var(--gray); }
+
+/* Status labels in table */
+.status-label {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-blocked { color: var(--red); }
+.status-attention { color: var(--amber); }
+.status-working { color: var(--green); }
+.status-done { color: var(--gray); }
+
+/* Compact table (for split view) */
+.agent-table-wrapper.compact {
+  padding: 12px 20px;
+}
+
+.compact .table-row td {
+  padding: 6px 12px;
+}
+
+.compact .table-summary {
+  display: none;
+}
+
+/* ========== SPLIT VIEW ========== */
+.split-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.split-pane {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+.split-top {
+  flex: 0 0 45%;
+}
+
+.split-bottom {
+  flex: 1;
+}
+
+.split-divider {
+  height: 3px;
+  background: var(--border);
+  flex-shrink: 0;
+  cursor: row-resize;
+  position: relative;
+}
+
+.split-divider::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--text-muted);
+  opacity: 0.3;
+}
+
+.split-divider:hover::after {
+  opacity: 0.6;
+}
+
+.split-bottom .kanban-board {
+  padding: 12px 20px;
+  gap: 12px;
+}
 

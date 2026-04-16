@@ -1,14 +1,22 @@
 import { useState } from 'react';
-import type { AgentCard as AgentCardType, Priority } from '../types/agent';
+import type { AgentCard as AgentCardType, UrgencyLevel, Priority } from '../types/agent';
 import { getUrgency } from '../types/agent';
 import { formatTimeInState } from '../utils/timeUtils';
 
 interface AgentTableProps {
   agents: AgentCardType[];
+  compact?: boolean;
 }
 
-type TableSortKey = 'project' | 'jira' | 'priority' | 'duration';
+type TableSortKey = 'status' | 'project' | 'jira' | 'priority' | 'duration';
 type SortDir = 'asc' | 'desc';
+
+const URGENCY_WEIGHT: Record<UrgencyLevel, number> = {
+  blocked: 0,
+  attention: 1,
+  working: 2,
+  done: 3,
+};
 
 const PRIORITY_WEIGHT: Record<Priority, number> = {
   Critical: 0,
@@ -20,6 +28,9 @@ const PRIORITY_WEIGHT: Record<Priority, number> = {
 function compareAgents(a: AgentCardType, b: AgentCardType, key: TableSortKey, dir: SortDir): number {
   let cmp = 0;
   switch (key) {
+    case 'status':
+      cmp = URGENCY_WEIGHT[getUrgency(a.agentStatus)] - URGENCY_WEIGHT[getUrgency(b.agentStatus)];
+      break;
     case 'project':
       cmp = a.projectName.localeCompare(b.projectName);
       break;
@@ -36,7 +47,14 @@ function compareAgents(a: AgentCardType, b: AgentCardType, key: TableSortKey, di
   return dir === 'asc' ? cmp : -cmp;
 }
 
-export function AgentTable({ agents }: AgentTableProps) {
+const STATUS_LABEL: Record<UrgencyLevel, string> = {
+  blocked: 'Blocked',
+  attention: 'Needs Attention',
+  working: 'Working',
+  done: 'Done',
+};
+
+export function AgentTable({ agents, compact }: AgentTableProps) {
   const [sortKey, setSortKey] = useState<TableSortKey>('duration');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
 
@@ -52,6 +70,7 @@ export function AgentTable({ agents }: AgentTableProps) {
   const sorted = [...agents].sort((a, b) => compareAgents(a, b, sortKey, sortDir));
 
   const columns: { key: TableSortKey; label: string }[] = [
+    { key: 'status', label: 'Status' },
     { key: 'project', label: 'Project' },
     { key: 'jira', label: 'Ticket' },
     { key: 'priority', label: 'Priority' },
@@ -59,7 +78,7 @@ export function AgentTable({ agents }: AgentTableProps) {
   ];
 
   return (
-    <div className="agent-table-wrapper">
+    <div className={`agent-table-wrapper${compact ? ' compact' : ''}`}>
       <table className="agent-table">
         <thead>
           <tr className="table-header-row">
@@ -88,11 +107,17 @@ export function AgentTable({ agents }: AgentTableProps) {
                 key={agent.id}
                 className={`table-row row-${urgency}`}
               >
+                <td className="table-td td-status">
+                  <span className={`status-label status-${urgency}`}>
+                    {STATUS_LABEL[urgency]}
+                  </span>
+                </td>
+
                 <td className="table-td td-project">
                   <a href={jiraUrl} className="table-project-link" target="_blank" rel="noreferrer">
                     {agent.projectName}
                   </a>
-                  <span className="table-summary">{agent.agentSummary}</span>
+                  {!compact && <span className="table-summary">{agent.agentSummary}</span>}
                 </td>
 
                 <td className="table-td td-jira">
