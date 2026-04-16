@@ -92,7 +92,7 @@
 .stat-blocked { color: var(--red); background: var(--red-dim); }
 .stat-attention { color: var(--amber); background: var(--amber-dim); }
 .stat-running { color: var(--green); background: var(--green-dim); }
-.stat-completed { color: var(--gray); background: var(--gray-dim); }
+.stat-completed { color: var(--green); background: var(--green-dim); }
 
 .stat-dot {
   width: 6px;
@@ -103,7 +103,7 @@
 .dot-blocked { background: var(--red); }
 .dot-attention { background: var(--amber); }
 .dot-running { background: var(--green); }
-.dot-completed { background: var(--gray); }
+.dot-completed { background: var(--green); }
 
 .filter-btn {
   display: flex;
@@ -135,7 +135,7 @@
 .filter-blocked.active { background: var(--red); border-color: var(--red); color: #fff; }
 .filter-attention.active { background: var(--amber); border-color: var(--amber); color: #fff; }
 .filter-running.active { background: var(--green); border-color: var(--green); color: #fff; }
-.filter-completed.active { background: var(--gray); border-color: var(--gray); color: #fff; }
+.filter-completed.active { background: var(--green); border-color: var(--green); color: #fff; }
 
 .filter-count {
   font-size: 11px;
@@ -312,7 +312,7 @@
 .column-checkbox input:checked + .dot-blocked { background: var(--red); }
 .column-checkbox input:checked + .dot-attention { background: var(--amber); }
 .column-checkbox input:checked + .dot-running { background: var(--green); }
-.column-checkbox input:checked + .dot-completed { background: var(--gray); }
+.column-checkbox input:checked + .dot-completed { background: var(--green); }
 
 /* ========== KANBAN BOARD ========== */
 .kanban-board {
@@ -384,12 +384,12 @@
 .column-blocked .column-dot { background: var(--red); }
 .column-attention .column-dot { background: var(--amber); }
 .column-running .column-dot { background: var(--green); }
-.column-completed .column-dot { background: var(--gray); }
+.column-completed .column-dot { background: var(--green); }
 
 .count-blocked { background: var(--red-dim); color: var(--red); }
 .count-attention { background: var(--amber-dim); color: var(--amber); }
 .count-running { background: var(--green-dim); color: var(--green); }
-.count-completed { background: var(--gray-dim); color: var(--gray); }
+.count-completed { background: var(--green-dim); color: var(--green); }
 
 .column-cards {
   display: flex;
@@ -433,7 +433,7 @@
 .urgency-blocked { border-left-color: var(--red); }
 .urgency-attention { border-left-color: var(--amber); }
 .urgency-running { border-left-color: var(--green); }
-.urgency-completed { border-left-color: var(--gray); opacity: 0.6; }
+.urgency-completed { border-left-color: var(--green); opacity: 0.6; }
 
 .urgency-completed:hover { opacity: 0.8; }
 
@@ -473,7 +473,7 @@
 .badge-blocked { background: var(--red-dim); color: var(--red); }
 .badge-attention { background: var(--amber-dim); color: var(--amber); }
 .badge-running { background: var(--green-dim); color: var(--green); }
-.badge-done { background: var(--gray-dim); color: var(--gray); }
+.badge-done { background: var(--green-dim); color: var(--green); }
 
 .badge-dot {
   width: 5px;
@@ -546,8 +546,8 @@ a.card-jira:hover {
 
 .time-blocked { color: var(--red); }
 .time-attention { color: var(--amber); }
-.time-working { color: var(--green); }
-.time-done { color: var(--gray); }
+.time-running { color: var(--green); }
+.time-completed { color: var(--green); }
 
 .card-links {
   display: flex;
@@ -673,10 +673,10 @@ a.card-jira:hover {
 
 .row-blocked td:first-child { border-left-color: var(--red); }
 .row-attention td:first-child { border-left-color: var(--amber); }
-.row-working td:first-child { border-left-color: var(--green); }
-.row-done td:first-child { border-left-color: var(--gray); }
-.row-done { opacity: 0.6; }
-.row-done:hover { opacity: 0.8; }
+.row-running td:first-child { border-left-color: var(--green); }
+.row-completed td:first-child { border-left-color: var(--green); }
+.row-completed { opacity: 0.6; }
+.row-completed:hover { opacity: 0.8; }
 
 .row-escalation-warn td:first-child { border-left-width: 4px; }
 .row-escalation-urgent td:first-child { border-left-width: 5px; }
@@ -754,8 +754,8 @@ a.card-jira:hover {
 
 .status-blocked { color: var(--red); }
 .status-attention { color: var(--amber); }
-.status-working { color: var(--green); }
-.status-done { color: var(--gray); }
+.status-running { color: var(--green); }
+.status-completed { color: var(--green); }
 
 /* ========== SPLIT (TILED) VIEW ========== */
 .split-grid {
@@ -780,8 +780,8 @@ a.card-jira:hover {
 
 .split-blocked { border-left-color: var(--red); }
 .split-attention { border-left-color: var(--amber); }
-.split-working { border-left-color: var(--green); }
-.split-done { border-left-color: var(--gray); opacity: 0.6; }
+.split-running { border-left-color: var(--green); }
+.split-completed { border-left-color: var(--green); opacity: 0.6; }
 
 .split-card-header {
   display: flex;
@@ -809,8 +809,8 @@ a.card-jira:hover {
 
 .split-status-blocked { color: var(--red); }
 .split-status-attention { color: var(--amber); }
-.split-status-working { color: var(--green); }
-.split-status-done { color: var(--gray); }
+.split-status-running { color: var(--green); }
+.split-status-completed { color: var(--green); }
 
 .split-title {
   font-size: 15px;
