@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Amplitude palette */
+  --blue-ribbon: #1E61F0;
+  --blue-zodiac: #13294B;
+  --catskill-white: #F1F4F9;
+
+  /* Surfaces */
+  --bg: #F7F8FA;
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F9FAFB;
+  --border: #E2E5EA;
+  --border-subtle: #EEF0F3;
+
+  /* Text */
+  --text-primary: var(--blue-zodiac);
+  --text-secondary: #5C6B82;
+  --text-muted: #97A3B6;
+
+  /* Status colors */
+  --red: #E5484D;
+  --red-dim: rgba(229, 72, 77, 0.07);
+  --red-glow: rgba(229, 72, 77, 0.14);
+
+  --amber: #E5930B;
+  --amber-dim: rgba(229, 147, 11, 0.07);
+  --amber-glow: rgba(229, 147, 11, 0.14);
+
+  --green: #30A46C;
+  --green-dim: rgba(48, 164, 108, 0.07);
+  --green-glow: rgba(48, 164, 108, 0.14);
+
+  --gray: #8B95A5;
+  --gray-dim: rgba(139, 149, 165, 0.07);
+
+  /* Typography */
+  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Radius — Amplitude uses soft, consistent rounding */
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
